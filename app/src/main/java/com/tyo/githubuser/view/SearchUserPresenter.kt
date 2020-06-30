@@ -34,16 +34,20 @@ class SearchUserPresenterImpl @Inject constructor(
     }
 
     override fun searchUser(name: String) {
-        repository.search(name)
-            .subscribeOn(schedulerProvider.io())
-            .observeOn(schedulerProvider.mainThread())
-            .subscribe({ users ->
-                if (users.isEmpty()) view.showError("empty result")
-                else view.setUserList(users)
-            }, {
-                view.showError("search failed")
-            }).let {
-                disposables.add(it)
-            }
+        if (name.isEmpty()) {
+            view.showError("input search is empty")
+        } else {
+            repository.search(name)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.mainThread())
+                .subscribe({ users ->
+                    if (users.isEmpty()) view.showError("empty result")
+                    else view.setUserList(users)
+                }, {
+                    view.showError("search failed")
+                }).let {
+                    disposables.add(it)
+                }
+        }
     }
 }

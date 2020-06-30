@@ -65,4 +65,16 @@ class SearchUserPresenterTest {
         // then
         verify(view).showError("search failed")
     }
+
+    @Test
+    fun givenEmptyInput_whenSearchUser_thenShowError() {
+        // given
+        val name = ""
+
+        // when
+        searchUserPresenter.searchUser(name)
+
+        // then
+        verify(view).showError("input search is empty")
+    }
 }

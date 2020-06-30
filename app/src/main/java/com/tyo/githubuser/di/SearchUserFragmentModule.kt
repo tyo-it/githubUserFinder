@@ -4,7 +4,7 @@ import com.tyo.githubuser.BuildConfig
 import com.tyo.githubuser.SchedulerProvider
 import com.tyo.githubuser.SchedulerProviderImpl
 import com.tyo.githubuser.repository.*
-import com.tyo.githubuser.view.SearchUserActivity
+import com.tyo.githubuser.view.SearchUserFragment
 import com.tyo.githubuser.view.SearchUserPresenter
 import com.tyo.githubuser.view.SearchUserPresenterImpl
 import dagger.Module
@@ -14,14 +14,14 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Module
-class SearchUserActivityModule(private val activity: SearchUserActivity) {
+class SearchUserFragmentModule(private val fragment: SearchUserFragment) {
 
     @Provides
     fun provideSearchUserPresenter(
         repository: UserRepository,
         schedulerProvider: SchedulerProvider
     ): SearchUserPresenter {
-        return SearchUserPresenterImpl(activity, repository, schedulerProvider)
+        return SearchUserPresenterImpl(fragment, repository, schedulerProvider)
     }
 
     @Provides
