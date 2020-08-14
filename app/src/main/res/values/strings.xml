@@ -4,4 +4,5 @@
     <string name="hint_search">Search Github users</string>
     <string name="retry">Retry</string>
     <string name="fetch_failed">Failed to fetch data from server</string>
+    <string name="empty_result">Empty Result</string>
 </resources>

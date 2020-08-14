@@ -13,7 +13,7 @@ class SearchUserViewModel(private val repository: UserRepository) : ViewModel() 
     private var lastQuery: String? = null
     private var lastSearchResult: Flow<PagingData<User>>? = null
 
-    fun searchRepo(queryString: String): Flow<PagingData<User>> {
+    fun searchUser(queryString: String): Flow<PagingData<User>> {
         val lastResult = lastSearchResult
         return if (queryString == lastQuery && lastResult != null) {
              lastResult

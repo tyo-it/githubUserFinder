@@ -7,8 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tyo.githubuser.R
 import com.tyo.githubuser.databinding.ActivityMainBinding
 import com.tyo.githubuser.di.Injection
 import kotlinx.coroutines.Job
@@ -38,6 +40,14 @@ class MainActivity : AppCompatActivity() {
                 header = LoadWithRetryAdapter { searchUserAdapter.retry() },
                 footer = LoadWithRetryAdapter { searchUserAdapter.retry() }
             )
+            lifecycleScope.launch {
+                @OptIn(ExperimentalPagingApi::class)
+                searchUserAdapter.dataRefreshFlow.collectLatest {
+                    if (searchUserAdapter.itemCount == 0) {
+                        Toast.makeText(this@MainActivity, getString(R.string.empty_result), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
             recyclerView.addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
 
             inputText.setOnEditorActionListener { textView , actionId, _ ->
@@ -77,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         // Make sure we cancel the previous job before creating a new one
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            viewModel.searchRepo(query).collectLatest {
+            viewModel.searchUser(query).collectLatest {
                 searchUserAdapter.submitData(it)
             }
         }
