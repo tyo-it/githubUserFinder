@@ -10,19 +10,19 @@ import kotlinx.coroutines.flow.Flow
 
 class SearchUserViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private var currentQueryValue: String? = null
-
-    private var currentSearchResult: Flow<PagingData<User>>? = null
+    private var lastQuery: String? = null
+    private var lastSearchResult: Flow<PagingData<User>>? = null
 
     fun searchRepo(queryString: String): Flow<PagingData<User>> {
-        val lastResult = currentSearchResult
-        if (queryString == currentQueryValue && lastResult != null) {
-            return lastResult
+        val lastResult = lastSearchResult
+        return if (queryString == lastQuery && lastResult != null) {
+             lastResult
+        } else {
+            val newResult: Flow<PagingData<User>> = repository.getSearchResultStream(queryString)
+                .cachedIn(viewModelScope)
+            lastQuery = queryString
+            lastSearchResult = newResult
+            newResult
         }
-        currentQueryValue = queryString
-        val newResult: Flow<PagingData<User>> = repository.getSearchResultStream(queryString)
-            .cachedIn(viewModelScope)
-        currentSearchResult = newResult
-        return newResult
     }
 }
