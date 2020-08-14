@@ -1,25 +1,26 @@
 package com.tyo.githubuser.repository
 
-import io.reactivex.Single
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.tyo.githubuser.api.GithubPagingSource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-interface UserRepository {
-    fun search(name: String): Single<List<User>>
-}
+class UserRepository @Inject constructor(
+    private val githubService: GithubService) {
 
-class UserRepositoryImpl @Inject constructor(
-    private val githubService: GithubService): UserRepository {
-
-    override fun search(name: String): Single<List<User>> {
-        return githubService.searchUser(name).map { result -> toUser(result.items) }
+    companion object {
+        private const val NETWORK_PAGE_SIZE = 50
     }
 
-    private fun toUser(items: List<Item>): List<User> {
-        return items.map { it ->
-            User(
-                it.login,
-                it.avatarUrl
-            )
-        }
+    fun getSearchResultStream(query: String): Flow<PagingData<User>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { GithubPagingSource(githubService, query) }
+        ).flow
     }
 }

@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.tyo.githubuser.R
 import com.tyo.githubuser.repository.User
 
-class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
-
-    var users: List<User> = arrayListOf()
+class SearchUserAdapter: PagingDataAdapter<User, SearchUserAdapter.ViewHolder>(USER_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater
@@ -22,18 +22,24 @@ class SearchResultAdapter: RecyclerView.Adapter<SearchResultAdapter.ViewHolder>(
         return ViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return users.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val user = users[position]
-        holder.userNameText.text = user.name
+        val user = getItem(position)
+        holder.userNameText.text = user?.name
 
         Glide.with(holder.itemView.context)
-            .load(user.avatarUrl)
+            .load(user?.avatarUrl)
             .apply(RequestOptions.circleCropTransform())
             .into(holder.avatarImage)
+    }
+
+    companion object {
+        private val USER_COMPARATOR = object : DiffUtil.ItemCallback<User>() {
+            override fun areItemsTheSame(oldItem: User, newItem: User): Boolean =
+                oldItem.name == newItem.name
+
+            override fun areContentsTheSame(oldItem: User, newItem: User): Boolean =
+                oldItem == newItem
+        }
     }
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
