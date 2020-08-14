@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tyo.githubuser.databinding.ActivityMainBinding
 import com.tyo.githubuser.di.Injection
@@ -34,10 +35,7 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             recyclerProjects.layoutManager = LinearLayoutManager(this@MainActivity)
             recyclerProjects.adapter = searchUserAdapter
-
-            btnSearch.setOnClickListener {
-                searchFromInputText()
-            }
+            recyclerProjects.addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
 
             inputText.setOnEditorActionListener { textView , actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_GO) {
