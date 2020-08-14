@@ -33,13 +33,13 @@ class MainActivity : AppCompatActivity() {
             .get(SearchUserViewModel::class.java)
 
         with(binding) {
-            recyclerProjects.layoutManager = LinearLayoutManager(this@MainActivity)
-            recyclerProjects.adapter = searchUserAdapter
-            recyclerProjects.addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            recyclerView.adapter = searchUserAdapter
+            recyclerView.addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
 
             inputText.setOnEditorActionListener { textView , actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_GO) {
-                    searchFromInputText()
+                    searchFromInputText(true)
                     true
                 } else {
                     false
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
             inputText.setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    searchFromInputText()
+                    searchFromInputText(true)
                     true
                 } else {
                     false
@@ -59,12 +59,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        searchFromInputText()
+        searchFromInputText(false)
     }
 
-    private fun searchFromInputText() {
+    private fun searchFromInputText(showEmptyInputToast: Boolean) {
         val query = binding.inputText.text.toString()
-        if (query.isBlank()) {
+        if (query.isBlank() && showEmptyInputToast) {
             Toast.makeText(this, "empty search input", Toast.LENGTH_SHORT).show()
         }
         search(query)
