@@ -34,7 +34,10 @@ class MainActivity : AppCompatActivity() {
 
         with(binding) {
             recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-            recyclerView.adapter = searchUserAdapter
+            recyclerView.adapter = searchUserAdapter.withLoadStateHeaderAndFooter(
+                header = LoadWithRetryAdapter { searchUserAdapter.retry() },
+                footer = LoadWithRetryAdapter { searchUserAdapter.retry() }
+            )
             recyclerView.addItemDecoration(DividerItemDecoration(this@MainActivity, DividerItemDecoration.VERTICAL))
 
             inputText.setOnEditorActionListener { textView , actionId, _ ->

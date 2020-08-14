@@ -18,6 +18,8 @@ class UserRepository @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = NETWORK_PAGE_SIZE,
+                prefetchDistance = NETWORK_PAGE_SIZE,
+                maxSize = NETWORK_PAGE_SIZE * 4,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { GithubPagingSource(githubService, query) }

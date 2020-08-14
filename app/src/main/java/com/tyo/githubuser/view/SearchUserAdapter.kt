@@ -18,7 +18,7 @@ class SearchUserAdapter: PagingDataAdapter<User, SearchUserAdapter.ViewHolder>(U
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.item_user, parent, false)
+            .inflate(R.layout.view_item_user, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -42,7 +42,7 @@ class SearchUserAdapter: PagingDataAdapter<User, SearchUserAdapter.ViewHolder>(U
         }
     }
 
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         var avatarImage: ImageView
         var userNameText: TextView
 

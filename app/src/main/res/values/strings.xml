@@ -2,4 +2,6 @@
     <string name="app_name">Github User Finder</string>
     <string name="search">Search</string>
     <string name="hint_search">Search Github users</string>
+    <string name="retry">Retry</string>
+    <string name="fetch_failed">Failed to fetch data from server</string>
 </resources>
