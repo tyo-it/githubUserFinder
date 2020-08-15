@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             @OptIn(ExperimentalPagingApi::class)
             searchUserAdapter.dataRefreshFlow.collectLatest {
                 if (searchUserAdapter.itemCount == 0) {
-                    Toast.makeText(this@MainActivity, getString(R.string.empty_result), Toast.LENGTH_SHORT).show()
+                    showInfoToast(getString(R.string.empty_result))
                 }
             }
         }
@@ -91,12 +91,7 @@ class MainActivity : AppCompatActivity() {
                 ?: loadState.prepend as? LoadState.Error
                 ?: loadState.refresh as? LoadState.Error
 
-            errorState?.let {
-                Toast.makeText(this@MainActivity,
-                    "\uD83D\uDE28 Wooops ${it.error.localizedMessage}",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+            errorState?.let { showErrorToast(it.error) }
         }
 
         return searchUserAdapter.withLoadStateHeaderAndFooter(
@@ -111,7 +106,7 @@ class MainActivity : AppCompatActivity() {
             search(query)
         }
         if (showEmptyInputToast && query.isBlank()) {
-            Toast.makeText(this, "empty search input", Toast.LENGTH_SHORT).show()
+            showInfoToast(getString(R.string.empty_search_input))
         }
     }
 
@@ -123,6 +118,17 @@ class MainActivity : AppCompatActivity() {
                 searchUserAdapter.submitData(it)
             }
         }
+    }
+
+    private fun showErrorToast(error: Throwable) {
+        Toast.makeText(this,
+            "Wooops ${error.localizedMessage}",
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun showInfoToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
 

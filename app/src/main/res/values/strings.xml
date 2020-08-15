@@ -5,4 +5,5 @@
     <string name="retry">Retry</string>
     <string name="fetch_failed">Failed to fetch data from server</string>
     <string name="empty_result">Empty Result</string>
+    <string name="empty_search_input">empty search input</string>
 </resources>
