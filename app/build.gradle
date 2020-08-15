@@ -76,17 +76,10 @@ dependencies {
     // glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
-    // dagger
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
     // testing
     testImplementation "junit:junit:$junitVersion"
     testImplementation "com.nhaarman:mockito-kotlin-kt1.1:$mockitoKotlinVersion"
     androidTestImplementation "androidx.test.ext:junit:$extJunitVersion"
     androidTestImplementation "androidx.test:runner:$runnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-    kaptAndroidTest "com.google.dagger:dagger-compiler:$daggerVersion"
-
-    // TODO : remove unused library
 }

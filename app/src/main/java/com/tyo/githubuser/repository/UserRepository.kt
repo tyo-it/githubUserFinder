@@ -5,9 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.tyo.githubuser.api.GithubPagingSource
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class UserRepository constructor(
     private val githubService: GithubService) {
 
     companion object {
