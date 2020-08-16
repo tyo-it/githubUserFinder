@@ -77,7 +77,9 @@ class MainActivity : AppCompatActivity() {
             @OptIn(ExperimentalPagingApi::class)
             searchUserAdapter.loadStateFlow.collectLatest {
                 if (it.source.refresh is LoadState.NotLoading
-                    && searchUserAdapter.itemCount == 0) {
+                    && searchUserAdapter.itemCount == 0
+                    && binding.inputText.text.isNotEmpty()
+                ) {
                     showInfoToast(getString(R.string.empty_result))
                 }
             }
