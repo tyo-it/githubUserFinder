@@ -28,6 +28,7 @@
             android:imeOptions="actionSearch"
             android:inputType="textNoSuggestions"
             android:paddingLeft="15dp"
+            android:maxLength="256"
             android:selectAllOnFocus="true" />
     </LinearLayout>
 
