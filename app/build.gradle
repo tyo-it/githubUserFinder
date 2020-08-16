@@ -66,12 +66,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpLoggingInterceptorVersion"
-
-    // rxJava
-    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"

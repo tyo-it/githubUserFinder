@@ -1,4 +1,4 @@
-package com.tyo.githubuser.repository
+package com.tyo.githubuser.api
 
 import com.google.gson.annotations.SerializedName
 

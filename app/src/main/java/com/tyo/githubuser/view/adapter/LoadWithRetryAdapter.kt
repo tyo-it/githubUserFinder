@@ -1,4 +1,4 @@
-package com.tyo.githubuser.view
+package com.tyo.githubuser.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,7 +16,10 @@ class LoadWithRetryAdapter(private val retry: () -> Unit) : LoadStateAdapter<Loa
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ViewHolder {
-        return ViewHolder.create(parent, retry)
+        return ViewHolder.create(
+            parent,
+            retry
+        )
     }
 
     class ViewHolder(
@@ -45,7 +48,10 @@ class LoadWithRetryAdapter(private val retry: () -> Unit) : LoadStateAdapter<Loa
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.view_item_load_with_retry, parent, false)
                 val binding = ViewItemLoadWithRetryBinding.bind(view)
-                return ViewHolder(binding, retry)
+                return ViewHolder(
+                    binding,
+                    retry
+                )
             }
         }
     }

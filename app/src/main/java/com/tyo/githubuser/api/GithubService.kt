@@ -1,4 +1,4 @@
-package com.tyo.githubuser.repository
+package com.tyo.githubuser.api
 
 import retrofit2.http.GET
 import retrofit2.http.Query

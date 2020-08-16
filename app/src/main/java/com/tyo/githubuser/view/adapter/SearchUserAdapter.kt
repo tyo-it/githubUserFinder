@@ -1,4 +1,4 @@
-package com.tyo.githubuser.view
+package com.tyo.githubuser.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,13 +13,17 @@ import com.bumptech.glide.request.RequestOptions
 import com.tyo.githubuser.R
 import com.tyo.githubuser.repository.User
 
-class SearchUserAdapter: PagingDataAdapter<User, SearchUserAdapter.ViewHolder>(USER_COMPARATOR) {
+class SearchUserAdapter: PagingDataAdapter<User, SearchUserAdapter.ViewHolder>(
+    USER_COMPARATOR
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.view_item_user, parent, false)
-        return ViewHolder(itemView)
+        return ViewHolder(
+            itemView
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

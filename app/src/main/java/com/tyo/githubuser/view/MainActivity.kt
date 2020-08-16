@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tyo.githubuser.R
 import com.tyo.githubuser.databinding.ActivityMainBinding
 import com.tyo.githubuser.di.Injection
+import com.tyo.githubuser.view.adapter.LoadWithRetryAdapter
+import com.tyo.githubuser.view.adapter.SearchUserAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -33,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // get the view model
         viewModel = ViewModelProvider(this, Injection.provideViewModelFactory())
             .get(SearchUserViewModel::class.java)
 
@@ -74,8 +75,9 @@ class MainActivity : AppCompatActivity() {
         // show toast when result is empty
         lifecycleScope.launch {
             @OptIn(ExperimentalPagingApi::class)
-            searchUserAdapter.dataRefreshFlow.collectLatest {
-                if (searchUserAdapter.itemCount == 0) {
+            searchUserAdapter.loadStateFlow.collectLatest {
+                if (it.source.refresh is LoadState.NotLoading
+                    && searchUserAdapter.itemCount == 0) {
                     showInfoToast(getString(R.string.empty_result))
                 }
             }
@@ -122,7 +124,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showErrorToast(error: Throwable) {
         Toast.makeText(this,
-            "Wooops ${error.localizedMessage}",
+            "Error: ${error.localizedMessage}",
             Toast.LENGTH_LONG
         ).show()
     }

@@ -4,10 +4,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.tyo.githubuser.api.GithubPagingSource
+import com.tyo.githubuser.api.GithubService
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository constructor(
-    private val githubService: GithubService) {
+    private val githubService: GithubService
+) {
 
     companion object {
         private const val NETWORK_PAGE_SIZE = 50

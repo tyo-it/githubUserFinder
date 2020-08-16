@@ -1,9 +1,7 @@
 package com.tyo.githubuser.api
 
 import androidx.paging.PagingSource
-import com.tyo.githubuser.repository.GithubService
 import com.tyo.githubuser.repository.User
-import com.tyo.githubuser.repository.UserResponse
 import retrofit2.HttpException
 import java.io.IOException
 
